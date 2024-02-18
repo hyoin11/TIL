@@ -1,5 +1,6 @@
 package DataStructure.bootCourseWithJava;
 
+import java.security.Key;
 import java.util.LinkedList;
 
 public class Hash_ {
@@ -61,6 +62,16 @@ public class Hash_ {
         numElements--;
 
         return true;
+    }
+
+    public V getValue(K key) {
+        int hashval = key.hashCode() & 0x7FFFFFFF % tableSize;
+        for (HashElement<K, V> he : harray[hashval]) {
+            if (((Comparable<K>) key).compareTo(he.key) == 0) {
+                return he.value;
+            }
+        }
+        return null;
     }
 
     public double loadFactor() {
