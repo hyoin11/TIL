@@ -3,7 +3,7 @@ package DataStructure.bootCourseWithJava;
 import java.security.Key;
 import java.util.LinkedList;
 
-public class Hash_ {
+public class Hash_<K, V> {
     class HashElement<K, V> implements Comparable<HashElement<K, V>> {
         K key;
         V value;
@@ -52,7 +52,7 @@ public class Hash_ {
     }
 
     public boolean remove(K key, V value) {
-        HashElement<K, V> = new HashElement<K, V>(key, value);
+        HashElement<K, V> he = new HashElement<K, V>(key, value);
 
         int hashval = key.hashCode();
         hashval = hashval & 0x7FFFFFFF;
@@ -79,5 +79,26 @@ public class Hash_ {
             return 0;
         }
         return numElements / tableSize;
+    }
+
+    public void resize(int newSize) {
+        LinkedList<HashElement<K, V>>[] newArray = (LinkedList<HashElement<K,V>>[]) new LinkedList[newSize];
+
+        for (int i = 0; i < newSize; i++) {
+            newArray[i] = new LinkedList<>();
+        }
+
+        for (LinkedList<HashElement<K, V>> hashElements : harray) {
+            for (HashElement<K, V> hashElement : hashElements) {
+                K key = hashElement.key;
+                V value = hashElement.value;
+                HashElement<K, V> he = new HashElement<>(key, value);
+                int hashVal = (key.hashCode() & 0x7FFFFFFF) % newSize;
+                newArray[hashVal].add(he);
+            }
+        }
+
+        harray = newArray;
+        tableSize = newSize;
     }
 }

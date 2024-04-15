@@ -123,4 +123,8 @@ public class LinkedList_<E> {
         }
         return tail.data;
     }
+
+    public int getCurrentSize() {
+        return currentSize;
+    }
 }
